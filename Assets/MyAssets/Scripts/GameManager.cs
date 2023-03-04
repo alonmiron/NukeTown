@@ -118,12 +118,12 @@ public class GameManager : MonoBehaviour
 
         // Check num of books on the table
      //   Debug.Log("num of books: " + BookDesk.GetComponent<CollidingScript>().numOfBooksOnDesk.ToString());
-        if(BookDesk.GetComponent<CollidingScript>().numOfBooksOnDesk >= 4)
+        /*if(BookDesk.GetComponent<CollidingScript>().numOfBooksOnDesk >= 4)
         {
             numOfBooksOnDeskIsBig = true;
             openDoor();
             //     Debug.Log("numOfBooksOnDeskIsBig is evaluated to:  " + numOfBooksOnDeskIsBig.ToString());
-        }
+        }*/
       //  Debug.Log("numOfBooksOnDeskIsBig is evaluated to: ping ping   " + numOfBooksOnDeskIsBig.ToString());
 
     }
