@@ -1,4 +1,4 @@
-Library: C:\Users\miron\My project (2)\Temp\StagingArea\tempburstlibs\armeabi-v7a\lib_burst_generated
+Library: C:\Users\miron\NukeTown\Temp\StagingArea\tempburstlibs\armeabi-v7a\lib_burst_generated
 --platform=Android
 --backend=burst-llvm-14
 --target=ARMV7A_NEON32
@@ -145,6 +145,7 @@ Library: C:\Users\miron\My project (2)\Temp\StagingArea\tempburstlibs\armeabi-v7
 --compilation-defines=ENABLE_BURST_1_0_0_OR_NEWER
 --compilation-defines=USING_ANIMATION_MODULE
 --compilation-defines=USING_PHYSICS2D_MODULE
+--compilation-defines=UNIVERSAL_1_0_0_OR_NEWER
 --compilation-defines=PACKAGE_INPUT_SYSTEM_EXISTS
 --compilation-defines=PACKAGE_INPUT_SYSTEM_1_2_0_OR_NEWER_EXISTS
 --compilation-defines=MODULE_AI_EXISTS
@@ -168,11 +169,10 @@ Library: C:\Users\miron\My project (2)\Temp\StagingArea\tempburstlibs\armeabi-v7
 --compilation-defines=VFX_HAS_PHYSICS
 --compilation-defines=VFX_HAS_AUDIO
 --compilation-defines=VFX_HAS_INPUT_SYSTEM_PACKAGE
---compilation-defines=UNIVERSAL_1_0_0_OR_NEWER
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=C:\Users\miron\My project (2)\Temp\Burst
+--temp-folder=C:\Users\miron\NukeTown\Temp\Burst
 --debug=Full
---output=C:\Users\miron\My project (2)\Temp\StagingArea\tempburstlibs\armeabi-v7a\lib_burst_generated
+--output=C:\Users\miron\NukeTown\Temp\StagingArea\tempburstlibs\armeabi-v7a\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 --pdb-search-paths=Temp/ManagedSymbols/
 
