@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
     public Animator DrawerTwoAnimator;
     public Animator DrawerThreeAnimator;
     public Animator DrawerFourAnimator;
+    public GameObject EndingCanvas;
 
 
 
@@ -402,5 +403,11 @@ public class GameManager : MonoBehaviour
     public void EndButtonGood()
     {
         OpenDrawerOne();
+    }
+
+    public void OnKeyClicked()
+    {
+        EndingCanvas.SetActive(true);
+        Time.timeScale = 0.0f;
     }
 }
