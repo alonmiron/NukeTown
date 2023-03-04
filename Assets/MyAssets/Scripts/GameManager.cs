@@ -64,6 +64,13 @@ public class GameManager : MonoBehaviour
     private bool doorHasBeenOpened = false;
     public Animator BottomDoorAnimator;
     public Animator UpperDoorAnimator;
+    public GameObject BookDesk;
+    private bool numOfBooksOnDeskIsBig = false;
+    public Animator DrawerOneAnimator;
+    public Animator DrawerTwoAnimator;
+    public Animator DrawerThreeAnimator;
+    public Animator DrawerFourAnimator;
+
 
 
 
@@ -79,6 +86,9 @@ public class GameManager : MonoBehaviour
 
         // Just for testing watch
         StartRoom();
+
+        //get script for collider in room 1
+    //    GameObject collidingScript = BookDesk.GetComponent<CollidingScript>();
     }
 
     void Update()
@@ -105,6 +115,16 @@ public class GameManager : MonoBehaviour
             buttonTwoClicked = true;
             openDoor();
         }
+
+        // Check num of books on the table
+     //   Debug.Log("num of books: " + BookDesk.GetComponent<CollidingScript>().numOfBooksOnDesk.ToString());
+        if(BookDesk.GetComponent<CollidingScript>().numOfBooksOnDesk >= 4)
+        {
+            numOfBooksOnDeskIsBig = true;
+            openDoor();
+            //     Debug.Log("numOfBooksOnDeskIsBig is evaluated to:  " + numOfBooksOnDeskIsBig.ToString());
+        }
+      //  Debug.Log("numOfBooksOnDeskIsBig is evaluated to: ping ping   " + numOfBooksOnDeskIsBig.ToString());
 
     }
 
@@ -319,11 +339,68 @@ public class GameManager : MonoBehaviour
     }
     private void openDoor()
     {
-        if (buttonZeroClicked && buttonOneClicked && buttonTwoClicked && !doorHasBeenOpened)
+        if (buttonZeroClicked && buttonOneClicked && buttonTwoClicked && !doorHasBeenOpened && numOfBooksOnDeskIsBig)
         {
+   //         Debug.Log("Got IN!");
             BottomDoorAnimator.SetTrigger("Open");
             UpperDoorAnimator.SetTrigger("OpenUp");
             doorHasBeenOpened = true;
+            StartCoroutine(DelayedDoorDisabling());
         }
+    }
+
+    IEnumerator DelayedDoorDisabling()
+    {
+        yield return new WaitForSeconds(4);
+        BottomDoorAnimator.enabled = false;
+        UpperDoorAnimator.enabled = false;
+    }
+
+    public void OpenDrawerOne()
+    {
+        DrawerOneAnimator.SetTrigger("OpenDrawer");
+        DisableDrawers();
+    }
+
+    public void OpenDrawerTwo()
+    {
+        DrawerTwoAnimator.SetTrigger("OpenDrawer");
+        DisableDrawers();
+    }
+    
+    public void OpenDrawerThree()
+    {
+        DrawerThreeAnimator.SetTrigger("OpenDrawer");
+        DisableDrawers();
+    }
+
+    public void OpenDrawerFour()
+    {
+        DrawerFourAnimator.SetTrigger("OpenDrawer");
+        DisableDrawers();
+    }
+
+    public void DisableDrawers()
+    {
+        StartCoroutine(DelayedDRawersDisabling());
+    }
+
+    IEnumerator DelayedDRawersDisabling()
+    {
+        yield return new WaitForSeconds(1);
+/*        DrawerOneAnimator.enabled = false;*/
+        DrawerTwoAnimator.enabled = false;
+        DrawerThreeAnimator.enabled = false;
+        DrawerFourAnimator.enabled = false;
+    }
+
+    public void EndButtonBad()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void EndButtonGood()
+    {
+        OpenDrawerOne();
     }
 }
