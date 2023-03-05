@@ -15,7 +15,7 @@ public class OpenDrawer : MonoBehaviour
       }
    }
 
-   public void OnOven()
+   public void OnOpen()
    {
       drawer.SetTrigger("opendrawer");
    
