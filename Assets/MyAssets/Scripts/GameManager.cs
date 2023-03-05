@@ -84,12 +84,16 @@ public class GameManager : MonoBehaviour
 
     // Game general
     private int currentSceneIndex;
+    public TrialLogger trialLogger;
 
-
+    //Temp
+    public TextMeshProUGUI twasy;
 
 
     void Start()
     {
+
+
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         if (currentSceneIndex == 0)
         {
@@ -101,6 +105,7 @@ public class GameManager : MonoBehaviour
             CityBackground.Play();
             CityBackground.volume = 0.01f;
             Sirens.volume = 0.01f;
+            StartTime();
         }
 
         LoadPlayerName();
@@ -108,8 +113,12 @@ public class GameManager : MonoBehaviour
         LoadLeaderBoard_Room1();
         LoadLeaderBoard_Room2();
 
-        // Just for testing watch
-        StartRoom();
+        // CSV LOGGER
+        List<string> columnList = new List<string> { };
+        trialLogger = GetComponent<TrialLogger>();
+        trialLogger.Initialize(PlayerName.ToString(), columnList);
+        // CSV LOGGER
+
 
         //get script for collider in room 1
     //    GameObject collidingScript = BookDesk.GetComponent<CollidingScript>();
@@ -118,10 +127,6 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            Bang.Play();
-        }
         // Block of code for watch update
         if (RoomStarted == true)
         {
@@ -205,7 +210,8 @@ public class GameManager : MonoBehaviour
 
         }
 
-        CurrentPlayerTime.text = Timer.ToString();
+        //CurrentPlayerTime.text = Timer.ToString();
+        CurrentPlayerTime.text = "00:00";
     }
 
     void LoadLeaderBoard_Room1()
@@ -286,21 +292,9 @@ public class GameManager : MonoBehaviour
         //UnityEditor.EditorApplication.isPlaying = false;
     }
 
-    void StartRoom()
+    void StartTime()
     {
-        // Start Timer
         RoomStarted = true;
-
-        //if (chooseroom 1){
-        //    RoomChoosen = 1;
-        //}
-        //else
-        //{
-        //    RoomChoosen = 2;
-        //}
-
-        //Change Scene to one of the Rooms
-
     }
 
     void EndRoom()
@@ -309,21 +303,27 @@ public class GameManager : MonoBehaviour
 
         if (RoomChoosen == 1)
         {
+            Debug.Log("CurrentRunScore: " + CurrentRunScore);
+            Debug.Log("firstplacetime: " + firstplacetime);
             if (CurrentRunScore < firstplacetime)
             {
+                Debug.Log("got in First");
                 PlayerPrefs.SetString("FirstPlace", CurrentPlayerName.text);
                 PlayerPrefs.SetFloat("FirstPlaceTime", CurrentRunScore);
             }
             else if (CurrentRunScore < secondplacetime)
             {
+                Debug.Log("got in Second");
                 PlayerPrefs.SetString("SecondPlace", CurrentPlayerName.text);
                 PlayerPrefs.SetFloat("SecondPlaceTime", CurrentRunScore);
             }
             else if (CurrentRunScore < thirdplacetime)
             {
+                Debug.Log("got in third");
                 PlayerPrefs.SetString("ThirdPlace", CurrentPlayerName.text);
                 PlayerPrefs.SetFloat("ThirdPlaceTime", CurrentRunScore);
             }
+            
         }
         else if (RoomChoosen == 2)
         {
@@ -476,8 +476,11 @@ public class GameManager : MonoBehaviour
 
     public void OnKeyClicked()
     {
+        RoomChoosen = currentSceneIndex;
         EndingCanvas.SetActive(true);
-        Time.timeScale = 0.0f;
+        EndRoom();
+        twasy.text = PlayerPrefs.GetFloat("FirstPlaceTime", 9999).ToString();
+     //   Time.timeScale = 0.0f;
     }
 
     public void OpenDoorIfPossible()
