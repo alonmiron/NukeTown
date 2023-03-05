@@ -12,12 +12,15 @@ public class PadTrigger : MonoBehaviour
         public AudioSource hint1; //hint 1
         public AudioSource hint2; //hint 2 
         public AudioSource message3;
-        
-    
+        private bool f1 = false;
+        private bool f2 = false;
+
         private void OnTriggerEnter(Collider other)
         {
             if (other == closedlaptop.GetComponent<Collider>())
             {
+                Debug.Log(f1.ToString() + " in if");
+                f1 = true;
                 Debug.Log("laptop");
                 closedlaptop.gameObject.SetActive(false);
                 openlaptop.gameObject.SetActive(true);
@@ -25,29 +28,30 @@ public class PadTrigger : MonoBehaviour
                 screen0.gameObject.SetActive(false);
                 screen2.gameObject.SetActive(false);
                 screen3.gameObject.SetActive(false);
-                //audioSource1 = GetComponent<AudioSource>();
-                hint1.PlayDelayed( 4 );
-
+                hint1.PlayDelayed( 3 );
             }
-            if (other == cable.GetComponent<Collider>())
+
+            Debug.Log(f1.ToString());
+            if (other == cable.GetComponent<Collider>() && f1 == true)
             {
+                
+                f2 = true; 
                 Debug.Log("cable");
                 screen2.gameObject.SetActive(true);
                 screen0.gameObject.SetActive(false);
                 screen1.gameObject.SetActive(false);
                 screen3.gameObject.SetActive(false);
-                hint2= GetComponent<AudioSource>();
-                hint2.PlayDelayed( 4 );
+                hint2.PlayDelayed(3);
             }
-            if (other == modem.GetComponent<Collider>())
+
+            if (other == modem.GetComponent<Collider>()&& f1==true && f2==true)
             {
                 Debug.Log("modem");
                 screen3.gameObject.SetActive(true);
                 screen0.gameObject.SetActive(false);
                 screen2.gameObject.SetActive(false);
                 screen1.gameObject.SetActive(false);
-                message3= GetComponent<AudioSource>();
-                message3.PlayDelayed( 4 );
+                message3.PlayDelayed( 3 );
             }
         }
     }

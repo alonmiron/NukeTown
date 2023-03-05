@@ -177,6 +177,22 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        if(currentSceneIndex == 2)
+        {
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                RoomTwoFinishMissionOne();
+            }
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                RoomTwoFinishMissionTwo();
+            }
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                RoomTwoFinishMissionThree();
+            }
+        }
+
         //  Debug.Log("numOfBooksOnDeskIsBig is evaluated to: ping ping   " + numOfBooksOnDeskIsBig.ToString());
 
     }
@@ -534,6 +550,23 @@ public class GameManager : MonoBehaviour
         }
         
     }
+
+    public void RoomTwoFinishMissionOne()
+    {
+        GameObject laptop = GameObject.FindWithTag("laptop");
+        laptop.transform.position = new Vector3((float)0.448997498, (float)1.32000005, (float)0.749367058);
+    }
+    public void RoomTwoFinishMissionTwo()
+    {
+        GameObject cable = GameObject.FindWithTag("cable");
+        cable.transform.position = new Vector3(0.448997498f,1.4f,0.749367058f);
+    }
+    public void RoomTwoFinishMissionThree()
+    {
+        GameObject modem = GameObject.FindWithTag("modem");
+        modem.transform.position = new Vector3(0.448997498f,1.4f,0.031f);
+    }
+
 
     IEnumerator DelayedDRawersOpening()
     {
