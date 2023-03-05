@@ -107,6 +107,7 @@ public class GameManager : MonoBehaviour
 
         LoadPlayerName();
         SetWatch();
+
         if (currentSceneIndex == 1)
         {
             LoadLeaderBoard_Room1();
