@@ -3035,7 +3035,6 @@ MonoBehaviour:
   BookTwoAnimator: {fileID: 1328978240}
   BookThreeAnimator: {fileID: 1556391748}
   trialLogger: {fileID: 0}
-  twasy: {fileID: 1253996193}
 --- !u!114 &187059590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8688,7 +8687,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &643260063
 MonoBehaviour:
   m_ObjectHideFlags: 0

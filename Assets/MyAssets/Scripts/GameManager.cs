@@ -86,9 +86,6 @@ public class GameManager : MonoBehaviour
     private int currentSceneIndex;
     public TrialLogger trialLogger;
 
-    //Temp
-    public TextMeshProUGUI twasy;
-
 
     void Start()
     {
@@ -490,8 +487,7 @@ public class GameManager : MonoBehaviour
         RoomChoosen = currentSceneIndex;
         EndingCanvas.SetActive(true);
         EndRoom();
-        twasy.text = PlayerPrefs.GetFloat("FirstPlaceTime", 9999).ToString();
-     //   Time.timeScale = 0.0f;
+        Time.timeScale = 0.0f;
     }
 
     public void OpenDoorIfPossible()
