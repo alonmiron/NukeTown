@@ -9,6 +9,21 @@ TagManager:
   - CurrentPlayerName
   - BookOutOfZone
   - BookInSideZone
+  - SecondPlace-time
+  - SecondPlace
+  - FirstPlace
+  - ThirdPlace
+  - FirstPlace-time
+  - ThirdPlace-time
+  - Room2_FirstPlace
+  - Room2_FirsrtPlace-time
+  - Room2_SecondPlace
+  - Room2_SecondPlace-time
+  - Room2_ThirdPlace
+  - Room2_ThirdPlace-time
+  - laptop
+  - cable
+  - modem
   layers:
   - Default
   - TransparentFX
