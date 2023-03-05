@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     // Loading Screen
     public GameObject LoadingCanvas;
     private bool gameStarted = false;
+    public GameObject city;
 
     // Room 1
     private bool buttonZeroClicked = false;
@@ -309,15 +310,26 @@ public class GameManager : MonoBehaviour
         if (gameStarted)
         {
             LoadingCanvas.SetActive(true);
-            StartCoroutine(DelayedExecution());
+            city.SetActive(false);
+            StartCoroutine(DelayedExecution(1));
+        }
+    }
+
+    public void LoadRoomTwo()
+    {
+        if (gameStarted)
+        {
+            LoadingCanvas.SetActive(true);
+            city.SetActive(false);
+            StartCoroutine(DelayedExecution(2));
         }
     }
 
     // Code to execute after the delay of 4 seconds
-    IEnumerator DelayedExecution()
+    IEnumerator DelayedExecution(int sceneNumber)
     {
         yield return new WaitForSeconds(4);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(sceneNumber);
     }
 
     // Room 1 Count Buttons clicked
@@ -397,7 +409,7 @@ public class GameManager : MonoBehaviour
 
     public void EndButtonBad()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(3);
     }
 
     public void EndButtonGood()
