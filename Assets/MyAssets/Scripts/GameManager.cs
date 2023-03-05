@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     // Loading Screen
     public GameObject LoadingCanvas;
     private bool gameStarted = false;
+    public GameObject city;
 
     // Room 1
     private bool buttonZeroClicked = false;
@@ -70,14 +71,37 @@ public class GameManager : MonoBehaviour
     public Animator DrawerTwoAnimator;
     public Animator DrawerThreeAnimator;
     public Animator DrawerFourAnimator;
+    public GameObject EndingCanvas;
+    private bool missionOneDone = false;
+    private bool missionTwoDone = false;
+    public GameObject CenterButtonOne;
+    public GameObject CenterButtonTwo;
+    public GameObject CenterButtonThree;
+    public Material ButtonGreenMaterial;
+    public Animator BookOneAnimator;
+    public Animator BookTwoAnimator;
+    public Animator BookThreeAnimator;
+
+    // Game general
+    private int currentSceneIndex;
 
 
 
 
     void Start()
     {
-        CityBackground.Play();
-        CityBackground.volume = 0.4f;
+        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        if (currentSceneIndex == 0)
+        {
+            CityBackground.Play();
+            CityBackground.volume = 0.4f;
+        }
+        else if(currentSceneIndex == 1 || currentSceneIndex == 2)
+        {
+            CityBackground.Play();
+            CityBackground.volume = 0.01f;
+            Sirens.volume = 0.01f;
+        }
 
         LoadPlayerName();
         SetWatch();
@@ -93,6 +117,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Bang.Play();
+        }
         // Block of code for watch update
         if (RoomStarted == true)
         {
@@ -106,7 +135,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.O))
+/*        if (Input.GetKeyDown(KeyCode.I))
         {
  //           BottomDoorAnimator.SetTrigger("Open");
  //           UpperDoorAnimator.SetTrigger("OpenUp");
@@ -114,17 +143,30 @@ public class GameManager : MonoBehaviour
             buttonOneClicked = true;
             buttonTwoClicked = true;
             openDoor();
-        }
+        }*/
 
         // Check num of books on the table
-     //   Debug.Log("num of books: " + BookDesk.GetComponent<CollidingScript>().numOfBooksOnDesk.ToString());
-        /*if(BookDesk.GetComponent<CollidingScript>().numOfBooksOnDesk >= 4)
+        //   Debug.Log("num of books: " + BookDesk.GetComponent<CollidingScript>().numOfBooksOnDesk.ToString());
+
+        // Playing room 
+        if(currentSceneIndex == 1)
         {
-            numOfBooksOnDeskIsBig = true;
-            openDoor();
-            //     Debug.Log("numOfBooksOnDeskIsBig is evaluated to:  " + numOfBooksOnDeskIsBig.ToString());
-        }*/
-      //  Debug.Log("numOfBooksOnDeskIsBig is evaluated to: ping ping   " + numOfBooksOnDeskIsBig.ToString());
+            OpenDoorIfPossible();
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                FinishMissionOne();
+            }
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                FinishMissionTwo();
+            }
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                FinishMissionThree();
+            }
+        }
+
+        //  Debug.Log("numOfBooksOnDeskIsBig is evaluated to: ping ping   " + numOfBooksOnDeskIsBig.ToString());
 
     }
 
@@ -215,15 +257,27 @@ public class GameManager : MonoBehaviour
 
     public void StartButton()
     {
-        RocketWhistle.Play();
-        RocketWhistle.volume = 1;
-        Sirens.Play();
-        Sirens.volume = 1;
-        Bang.PlayDelayed(5);
-        Bang.volume = 1;
+        if (!gameStarted)
+        {
+            //StartCoroutine(DelayedBombExecution());
+            RocketWhistle.Play();
+            RocketWhistle.volume = 1;
+            Sirens.Play();
+            Sirens.volume = 1;
+            Bang.PlayDelayed(5);
+            Bang.volume = 1;
 
-        Nuke.SetActive(true);
-        gameStarted = true;
+            Nuke.SetActive(true);
+            gameStarted = true;
+        }
+
+    }
+
+    IEnumerator DelayedBombExecution()
+    {
+        yield return new WaitForSeconds(5);
+        Bang.Play();
+        RocketWhistle.Play();
     }
 
     public void ExitButton()
@@ -308,15 +362,27 @@ public class GameManager : MonoBehaviour
         if (gameStarted)
         {
             LoadingCanvas.SetActive(true);
-            StartCoroutine(DelayedExecution());
+            city.SetActive(false);
+            StartCoroutine(DelayedExecution(1));
+        }
+    }
+
+    public void LoadRoomTwo()
+    {
+        if (gameStarted)
+        {
+            LoadingCanvas.SetActive(true);
+            city.SetActive(false);
+            StartCoroutine(DelayedExecution(2));
         }
     }
 
     // Code to execute after the delay of 4 seconds
-    IEnumerator DelayedExecution()
+    IEnumerator DelayedExecution(int sceneNumber)
     {
         yield return new WaitForSeconds(4);
-        SceneManager.LoadScene(1);
+        CityBackground.volume = 0.01f;
+        SceneManager.LoadScene(sceneNumber);
     }
 
     // Room 1 Count Buttons clicked
@@ -339,6 +405,10 @@ public class GameManager : MonoBehaviour
     }
     private void openDoor()
     {
+        if (buttonZeroClicked && buttonOneClicked && buttonTwoClicked)
+        {
+            missionOneDone = true;
+        }
         if (buttonZeroClicked && buttonOneClicked && buttonTwoClicked && !doorHasBeenOpened && numOfBooksOnDeskIsBig)
         {
    //         Debug.Log("Got IN!");
@@ -396,11 +466,81 @@ public class GameManager : MonoBehaviour
 
     public void EndButtonBad()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(3);
     }
 
     public void EndButtonGood()
     {
         OpenDrawerOne();
+    }
+
+    public void OnKeyClicked()
+    {
+        EndingCanvas.SetActive(true);
+        Time.timeScale = 0.0f;
+    }
+
+    public void OpenDoorIfPossible()
+    {
+        if (BookDesk.GetComponent<CollidingScript>().numOfBooksOnDesk >= 3)
+        {
+            numOfBooksOnDeskIsBig = true;
+            missionOneDone = true;
+            missionTwoDone = true;
+            openDoor();
+            //     Debug.Log("numOfBooksOnDeskIsBig is evaluated to:  " + numOfBooksOnDeskIsBig.ToString());
+        }
+    }
+
+    public void FinishMissionOne()
+    {
+
+        buttonZeroClicked = true;
+        buttonOneClicked = true;
+        buttonTwoClicked = true;
+        ChangeMaterial(CenterButtonOne);
+        buttonZeroClicked = true;
+        ChangeMaterial(CenterButtonTwo);
+        buttonOneClicked = true;
+        ChangeMaterial(CenterButtonThree);
+        buttonTwoClicked = true;
+        openDoor();
+    }
+
+    public void FinishMissionTwo()
+    {
+        BookOneAnimator.SetTrigger("MoveBook1");
+        BookTwoAnimator.SetTrigger("MoveBook2");
+        BookThreeAnimator.SetTrigger("MoveBook3");
+    }
+
+    public void FinishMissionThree()
+    {
+        if(missionOneDone && missionTwoDone)
+        {
+            OpenDrawerOne();
+            StartCoroutine(DelayedDRawersOpening());
+        }
+        
+    }
+
+    IEnumerator DelayedDRawersOpening()
+    {
+        yield return new WaitForSeconds(1);
+        OnKeyClicked();
+    }
+
+    private void ChangeMaterial(GameObject gameObjectToChange)
+    {
+        Renderer renderer = gameObjectToChange.GetComponent<Renderer>();
+
+        if (renderer != null)
+        {
+            renderer.material = ButtonGreenMaterial;
+        }
+        else
+        {
+            Debug.LogWarning("Could not change material: GameObject has no Renderer component");
+        }
     }
 }
