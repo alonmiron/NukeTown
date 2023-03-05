@@ -110,8 +110,19 @@ public class GameManager : MonoBehaviour
 
         LoadPlayerName();
         SetWatch();
-        LoadLeaderBoard_Room1();
-        LoadLeaderBoard_Room2();
+        if (currentSceneIndex == 1)
+        {
+            LoadLeaderBoard_Room1();
+        }
+        if (currentSceneIndex == 2)
+        {
+            LoadLeaderBoard_Room2();
+        }
+        else
+        {
+            LoadLeaderBoard_Room1();
+            LoadLeaderBoard_Room2();
+        }
 
         // CSV LOGGER
         List<string> columnList = new List<string> { };
