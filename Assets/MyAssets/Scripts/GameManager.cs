@@ -117,6 +117,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Bang.Play();
+        }
         // Block of code for watch update
         if (RoomStarted == true)
         {
@@ -254,12 +259,12 @@ public class GameManager : MonoBehaviour
     {
         if (!gameStarted)
         {
-            StartCoroutine(DelayedBombExecution());
-            //    RocketWhistle.Play();
+            //StartCoroutine(DelayedBombExecution());
+            RocketWhistle.Play();
             RocketWhistle.volume = 1;
             Sirens.Play();
             Sirens.volume = 1;
-            //  Bang.PlayDelayed(5);
+            Bang.PlayDelayed(5);
             Bang.volume = 1;
 
             Nuke.SetActive(true);
