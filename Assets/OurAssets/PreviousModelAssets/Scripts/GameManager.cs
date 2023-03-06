@@ -82,6 +82,9 @@ public class GameManager : MonoBehaviour
     public Animator BookTwoAnimator;
     public Animator BookThreeAnimator;
 
+    //Room 2
+    public GameObject EndingCanvasRoom2;
+
     // Game general
     private int currentSceneIndex;
     public TrialLogger trialLogger;
@@ -160,7 +163,7 @@ public class GameManager : MonoBehaviour
                 }*/
 
         // Check num of books on the table
-        Debug.Log("num of books: " + BookDesk.GetComponent<CollidingScript>().numOfBooksOnDesk.ToString());
+        /*Debug.Log("num of books: " + BookDesk.GetComponent<CollidingScript>().numOfBooksOnDesk.ToString());*/
 
         // Playing room 
         if (currentSceneIndex == 1)
@@ -177,6 +180,25 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.P))
             {
                 FinishMissionThree();
+            }
+        }
+        else if(currentSceneIndex == 2)
+        {
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                RoomTwoFinishMissionOne();
+            }
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                RoomTwoFinishMissionTwo();
+            }
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                RoomTwoFinishMissionThree();
+            }
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                EndingCanvasRoom2.SetActive(true);
             }
         }
 
@@ -556,5 +578,26 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("Could not change material: GameObject has no Renderer component");
         }
+    }
+
+    public void RoomTwoFinishMissionOne()
+    {
+        GameObject laptop = GameObject.FindWithTag("laptop");
+        laptop.transform.position = new Vector3(-4.23499775f, 1.43543625f, 9.829319f);
+        /*        Vector3(0.448997498, 1.30799997, 0.749367058)
+                    Vector3(1.63, 0.0994362831, -8.11699963)*/
+       /* Vector3(-4.23499775f, 1.43543625f, 9.829319f)*/
+    }
+
+    public void RoomTwoFinishMissionTwo()
+    {
+        GameObject cable = GameObject.FindWithTag("cable");
+        cable.transform.position = new Vector3(-4.47699547f, 1.40943623f, 10.6600199f);
+    }
+
+    public void RoomTwoFinishMissionThree()
+    {
+        GameObject modem = GameObject.FindWithTag("modem");
+        modem.transform.position = new Vector3(-4.776999f, 1.34943628f, 9.32380104f);
     }
 }

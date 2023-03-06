@@ -12,16 +12,16 @@ public class PadTrigger : MonoBehaviour
         public AudioSource hint1; //hint 1
         public AudioSource hint2; //hint 2 
         public AudioSource message3;
-        private bool f1 = false;
-        private bool f2 = false;
+/*        private bool f1 = false;
+        private bool f2 = false;*/
 
         private void OnTriggerEnter(Collider other)
         {
             if (other == closedlaptop.GetComponent<Collider>())
             {
-                Debug.Log(f1.ToString() + " in if");
-                f1 = true;
-                Debug.Log("laptop");
+/*                Debug.Log(f1.ToString() + " in if");
+*//*                f1 = true;
+*/                Debug.Log("laptop");
                 closedlaptop.gameObject.SetActive(false);
                 openlaptop.gameObject.SetActive(true);
                 screen1.gameObject.SetActive(true);
@@ -31,11 +31,11 @@ public class PadTrigger : MonoBehaviour
                 hint1.PlayDelayed( 3 );
             }
 
-            Debug.Log(f1.ToString());
-            if (other == cable.GetComponent<Collider>() && f1 == true)
+/*            Debug.Log(f1.ToString());*/
+            if (other == cable.GetComponent<Collider>())
             {
                 
-                f2 = true; 
+/*                f2 = true; */
                 Debug.Log("cable");
                 screen2.gameObject.SetActive(true);
                 screen0.gameObject.SetActive(false);
@@ -44,7 +44,7 @@ public class PadTrigger : MonoBehaviour
                 hint2.PlayDelayed(3);
             }
 
-            if (other == modem.GetComponent<Collider>()&& f1==true && f2==true)
+            if (other == modem.GetComponent<Collider>())
             {
                 Debug.Log("modem");
                 screen3.gameObject.SetActive(true);
